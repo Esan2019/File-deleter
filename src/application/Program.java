@@ -10,11 +10,14 @@ public class Program {
     private static ArrayList<File> filteredFiles = new ArrayList<>();
 
     public static void main(String[] args) {
+        System.out.println();
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter folder path that contains the files to delete: ");
         File folder = new File(sc.nextLine());
         System.out.print("Enter file format to delete (without dot): ");
         fileFormat = sc.nextLine();
+        System.out.println();
+        System.out.println("List of files found:");
         ArrayList<File> files = filterFiles(folder.listFiles());
         for (File f : files) {
             System.out.println(f.getName());
