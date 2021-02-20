@@ -24,11 +24,15 @@ public class FileManager {
         return filterFiles(files);
     }
 
-    private ArrayList<File> filterFiles(File[] files) {
+    private ArrayList<File> filterFiles(File[] files) throws SecurityException {
         for (File f : files) {
-            if (f.isDirectory()) {
-                filterFiles(f.listFiles());
-            } else if (fileHasCorrectExtension(f)) {
+            // If f is a subdirectory and is not empty
+            if (f.isDirectory() && f.list().length > 0) {
+                final File[] subdirectoryFiles = f.listFiles();
+                filterFiles(subdirectoryFiles);
+            }
+            // If f is a regular file
+            else if (fileHasCorrectExtension(f)) {
                 filteredFiles.add(f);
             }
         }
