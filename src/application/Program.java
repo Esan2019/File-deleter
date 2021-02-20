@@ -5,44 +5,79 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Program {
-
-    private static String fileFormat;
-    private static ArrayList<File> filteredFiles = new ArrayList<>();
-
     public static void main(String[] args) {
-        System.out.println();
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter folder path that contains the files to delete: ");
-        File folder = new File(sc.nextLine());
-        System.out.print("Enter file format to delete (without dot): ");
-        fileFormat = sc.nextLine();
-        System.out.println();
-        System.out.println("List of files found:");
-        ArrayList<File> files = filterFiles(folder.listFiles());
-        for (File f : files) {
-            System.out.println(f.getName());
+
+        printSpace();
+        printMessage("Enter folder path that contains the files to delete: ");
+        String folderPath = sc.nextLine();
+
+        printSpace();
+        printMessage("Enter file extension to delete (without dot): ");
+        String fileExtension = sc.nextLine();
+
+        FileManager fileManager = new FileManager(folderPath, fileExtension);
+
+        ArrayList<File> filteredFiles = fileManager.filterFiles();
+        final int amountOfFilteredFiles = filteredFiles.size();
+
+        printSpace();
+
+        printResultHeadlineBasedOn(amountOfFilteredFiles);
+        printFilesNames(filteredFiles);
+
+        if (amountOfFilteredFiles > 1) {
+            printSpace();
+            printMessage("Total files found: " + amountOfFilteredFiles);
         }
-        System.out.println();
-        System.out.println("Total files found: " + files.size());
-        System.out.println();
-        System.out.print("Are you sure you want to delete all these files? (y/n) ");
-        if(sc.nextLine().charAt(0) == 'y') {
-            files.forEach(file -> file.delete());
-            System.out.println("Successfully deleted " + files.size() + " files.");
+
+        printSpace();
+
+        printDeleteConfirmationBasedOn(amountOfFilteredFiles);
+        String userChoice = sc.nextLine();
+        printSpace();
+
+        if(userChoice.toLowerCase().charAt(0) == 'y') {
+            fileManager.deleteFilteredFiles();
+            printMessage("Successfully deleted " + amountOfFilteredFiles + " files.");
+        } else {
+            printMessage("Operation aborted.");
         }
+
         sc.close();
     }
 
-    private static ArrayList<File> filterFiles(File[] files) throws NullPointerException {
-        for (File f : files) {
-            if (f.isDirectory()) {
-                File directory = new File(f.getAbsolutePath());
-                filterFiles(directory.listFiles());
-            }
-            if (f.getName().contains("." + fileFormat)) {
-                filteredFiles.add(f);
-            }
+    private static void printSpace() {
+        System.out.println();
+    }
+
+    private static void printMessage(String message) {
+        System.out.println(message);
+    }
+
+    private static void printResultHeadlineBasedOn(int fileCount) {
+        if (fileCount < 1) {
+            printMessage("No file with the given extension was found.");
+            System.exit(0);
+        } else if (fileCount == 1) {
+            printMessage("Only one file found:");
+        } else {
+            printMessage("List of files found:");
         }
-        return filteredFiles;
+    }
+
+    private static void printDeleteConfirmationBasedOn(int fileCount) {
+        final String prefix = "Are you sure you want to permanently delete";
+        final String suffix = "? (y/n) ";
+
+        if (fileCount > 1) {
+            printMessage(prefix + " these files" + suffix);
+        } else if (fileCount == 1) {
+            printMessage(prefix + " this file" + suffix);
+        }
+    }
+
+    private static void printFilesNames(ArrayList<File> files) {
+        files.forEach(f -> printMessage(f.getName()));
     }
 }
