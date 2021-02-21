@@ -1,11 +1,11 @@
 # File deleter
 A simple command-line tool to batch delete files.
 ## Usage
-Since there is no graphical user interface (GUI), you may use the standard `java -jar` command, passing the tool file name as paramater.
+Since there is no graphical user interface (GUI), you may use the standard `java -jar` command, passing the tool's filename as paramater.
 
-After thath, the process is intuitive and prompted on screen.
+After that, the process is intuitive and prompted on screen.
 
-First, you need to provide the full directory path wich contains the files you want to delete. It can be a parent folder containing subfolders. The tool will recursively search for your files in all the subfolders.
+First, you need to provide the full directory path which contains the files you want to delete. It can be a parent folder containing subfolders. The tool will recursively search for your files in the parent folder and all subfolders. The path can be either Unix-like (with forward slashes, like `/home/user`), or DOS-like (with backward slashes, like `C:\Users\`.
 
 Then, you need to provide the file extension you want to delete, without the leading dot. For example: "png" would match all files ending with ".png".
 
