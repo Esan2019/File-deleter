@@ -1,7 +1,7 @@
 # File deleter
 A simple command-line tool to batch delete files.
 ## Usage
-Since there is no graphical user interface (GUI), you may use the standard `java -jar` command, passing the tool's filename as paramater.
+Since there is no graphical user interface (GUI), you may use the standard `java -jar` command, passing the tool's filename as parameter.
 
 After that, the process is intuitive and prompted on screen.
 
