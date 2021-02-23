@@ -1,4 +1,4 @@
-package application;
+package util;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ public class FileManager {
     private final String extension;
     private final ArrayList<File> filteredFiles = new ArrayList<>();
 
-    FileManager(String workingDirectoryPath, String extension) {
+    public FileManager(String workingDirectoryPath, String extension) {
         File workingDirectory = new File(workingDirectoryPath);
         this.files = workingDirectory.listFiles();
         this.extension = extension;
